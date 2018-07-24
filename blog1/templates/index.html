@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Taint service</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/static/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+   </head>
+   <body>
+      <div class="jumbotron text-center" style="margin-bottom:20;padding-top:10">
+        <h2 class="text-primary">Taint service</h2>
+      </div>
+      <div class="container">
+          <div class="row">
+            <form class="bs-example bs-example-form" role="form" action="/search" method="get">
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="input-group">
+                        <span class="input-group-addon">assemble instruction</span>
+                        <input type="text" class="form-control" placeholder="add eax,ebx" name="insn">
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-right:-20px">
+                    <select class="selectpicker" name="insn_arch">
+                        {%for arch in archs%}
+                            <option value="{{arch}}">{{arch}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="col-md-2" style="padding-left:0px">
+                    <input type="submit" value="submit">
+                </div>
+            </form>
+          </div>
+          {%if info%}
+          <div class="row" style="margin-top:20px;">
+              <div class="col-md-12 ">
+                  <div class="panel panel-info">
+                      <div class="panel-heading">
+                          <h3 class="panel-title">information&nbsp;{{insn_str}}</h3>
+                      </div>
+                      <div class="panel-body">
+                          {{info}}
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {%endif%}
+      </div>
+    </div>
+      <script src="/static/bootstrap/js/jquery.js"></script>
+      <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+      <script src="/static/bootstrap/js/bootstrap-select.min.js"></script>
+   </body>
+</html>
