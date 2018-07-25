@@ -36,9 +36,9 @@ function draw_relations(stage,relations){
     ew=(cw-1)/(max_num+1)
     eh=ew/2
     eg=eh/2*3
-    stage.height((eh+eg)*relations.regs.length- (relations.regs.length>0?eg:0))
+    stage.height(2+(eh+eg)*relations.regs.length- (relations.regs.length>0?eg:0))
     for (var i=0;i<relations.regs.length;i++){
-        draw_register(stage,0,(eh+eg)*i,relations.regs[i],ew,eh)
+        draw_register(stage,0,(eh+eg)*i+1,relations.regs[i],ew,eh)
     }
 
     for(var i=0;i<relations.arrows.length;i++){
