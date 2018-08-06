@@ -62,6 +62,9 @@ function submit(){
         $("#info-panel").show()
         $("#info-title").html("information "+ret.insn_str)
         $("#show_place").html(ret.info)
+
+        $("svg").remove()
+        $("#rect1").empty()
         var stage = acgraph.create("rect1");
         draw_relations(stage,ret.graphs)
         })
