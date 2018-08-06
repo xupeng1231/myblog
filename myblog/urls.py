@@ -19,5 +19,5 @@ import blog1.views as bv
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', bv.index),
-    url(r'^search/$',bv.search)
+    url(r'^info/$',bv.info)
 ]

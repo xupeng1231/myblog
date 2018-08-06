@@ -13,52 +13,66 @@
       </div>
       <div class="container">
           <div class="row">
-            <form class="bs-example bs-example-form" role="form" action="/search" method="get">
+            <form class="bs-example bs-example-form" role="form"> <!--action="/search" method="get"-->
                 <div class="col-md-5 col-md-offset-1">
                     <div class="input-group">
                         <span class="input-group-addon">assemble instruction</span>
-                        <input type="text" class="form-control" placeholder="add eax,ebx" name="insn">
+                        <input type="text" class="form-control" placeholder="add eax,ebx" name="insn" id="insn">
                     </div>
                 </div>
                 <div class="col-md-3" style="margin-right:-20px">
-                    <select class="selectpicker" name="insn_arch">
+                    <select class="selectpicker" name="insn_arch" id="insn_arch">
                         {%for arch in archs%}
                             <option value="{{arch}}">{{arch}}</option>
                         {%endfor%}
                     </select>
                 </div>
-                <div class="col-md-2" style="padding-left:0px">
-                    <input type="submit" value="submit">
+                <div class="col-md-2" style="padding-left:20px">
+                    <button class="btn-primary" type="button" id="submit">submit..</button>
                 </div>
             </form>
           </div>
-          {%if info%}
-          <div class="row" style="margin-top:20px;">
+          <div class="row" style="margin-top:20px;display:none" id="info-panel">
               <div class="col-md-12 ">
                   <div class="panel panel-info">
                       <div class="panel-heading">
-                          <h3 class="panel-title">information&nbsp;{{insn_str}}</h3>
+                          <h3 class="panel-title" id="info-title">information&nbsp;{{insn_str}}</h3>
                       </div>
                       <div class="panel-body">
-                          {{info}}
+                          <div id="show_place"></div>
                           <div class="col-lg-12" height="300px" id="rect1" style="margin:20px 0px 20px 0px;padding:0px">
                           </div>
                       </div>
                   </div>
               </div>
           </div>
-          {%endif%}
           <div class="row">
           </div>
-          <script>
-
-          </script>
-      </div>
-    </div>
-      <script src="/static/bootstrap/js/jquery.js"></script>
+          <script src="/static/bootstrap/js/jquery.js"></script>
       <script src="/static/bootstrap/js/graphics.min.js"></script>
       <script src="/static/bootstrap/js/draw.js"></script>
       <script src="/static/bootstrap/js/bootstrap.min.js"></script>
       <script src="/static/bootstrap/js/bootstrap-select.min.js"></script>
+          <script>
+
+function submit(){
+    insn=$("#insn").val()
+    insn_arch=$("#insn_arch").val()
+    $.get("/info/",{"insn":insn,"insn_arch":insn_arch},function(ret){
+        $("#info-panel").show()
+        $("#info-title").html("information "+ret.insn_str)
+        $("#show_place").html(ret.info)
+        var stage = acgraph.create("rect1");
+        draw_relations(stage,ret.graphs)
+        })
+}
+       $(document).ready(function(){
+            $("#submit").click(function(){
+            submit()})
+       })
+          </script>
+      </div>
+    </div>
+
    </body>
 </html>

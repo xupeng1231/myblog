@@ -212,8 +212,8 @@ class ConditionInfo(object):
     
     def gen_conds(self, partition, blacklist=[], max_runs=256):
         # use z3 to generate results
-        solver = z3.Solver()
-        x = z3.BitVec('x', self.reg.bits)
+        solver = blog1.z3.Solver()
+        x = blog1.z3.BitVec('x', self.reg.bits)
         z3conds_raw_set = defaultdict(set)
         z3conds_set = defaultdict(set)
         cond_set = set()
@@ -237,18 +237,18 @@ class ConditionInfo(object):
 
         for cond_mask in z3conds_raw_set:
             if partition:
-                z3conds = [z3.And(a, b) for a,b in z3conds_raw_set[cond_mask]]
-                z3conds_set[cond_mask] = z3.Or(*z3conds)
+                z3conds = [blog1.z3.And(a, b) for a, b in z3conds_raw_set[cond_mask]]
+                z3conds_set[cond_mask] = blog1.z3.Or(*z3conds)
             else:
-                neg_z3conds = [z3.And(z3.Not(a), b) for a,b in z3conds_raw_set[cond_mask]]
-                z3conds_set[cond_mask] = z3.And(*neg_z3conds)
+                neg_z3conds = [blog1.z3.And(blog1.z3.Not(a), b) for a, b in z3conds_raw_set[cond_mask]]
+                z3conds_set[cond_mask] = blog1.z3.And(*neg_z3conds)
 
         values = set()
         for cond_mask in z3conds_set:
             print(partition, z3conds_set[cond_mask])
             solver.add(z3conds_set[cond_mask])
             for count in range(max_runs):
-                if solver.check() == z3.sat:
+                if solver.check() == blog1.z3.sat:
                     value = solver.model()[x]
                     check_val = value.as_long()
                     values.add((check_val, cond_mask))

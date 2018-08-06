@@ -73,13 +73,4 @@ function arrow(stage,x0,y0,x1,y1){
     linePath.lineTo(x4,y4)
 }
 
-$(document).ready(function(){
-    var stage = acgraph.create("rect1");
-    regs=[Register("eax",32,0xff),Register("ebx",32,0xff)]
-    rels=[]
-    for(var i=0;i<32;i++){
-        rels[i]=[0,i,1,i]
-    }
-    relations=Relations(regs,rels)
-    draw_relations(stage,relations)
-});
+
