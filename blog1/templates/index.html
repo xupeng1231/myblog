@@ -60,14 +60,22 @@ function submit(){
     insn_arch=$("#insn_arch").val()
     $.get("/info/",{"insn":insn,"insn_arch":insn_arch},function(ret){
         $("#info-panel").show()
+        $("svg").remove()
+        $("#rect1").empty()
+        console.log(ret)
+
+        if(ret.status=="fail"){
+            $("#info-title").html("information")
+            $("#show_place").html(ret.info)
+            return
+        }
         $("#info-title").html("information "+ret.insn_str)
         $("#show_place").html(ret.info)
 
-        $("svg").remove()
-        $("#rect1").empty()
+
         var stage = acgraph.create("rect1");
         draw_relations(stage,ret.graphs)
-        })
+     })
 }
        $(document).ready(function(){
             $("#submit").click(function(){

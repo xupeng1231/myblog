@@ -5,9 +5,7 @@ from django.db import models
 # Create your models here.
 
 
-class Article(models.Model):
-    title = models.CharField(max_length=64)
-    content = models.TextField(null = True)
-
-    def __unicode__(self):
-        return self.title
+class InsDatabase(models.Model):
+    code = models.CharField(max_length=64)
+    arch = models.CharField(max_length=64)
+    data = models.TextField()
